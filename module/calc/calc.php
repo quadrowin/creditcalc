@@ -152,7 +152,7 @@
                 </div>
                 <div class="result">
                     <p>Постоянная ссылка на этот расчет:</p>
-                    <input class="form-control" name="this-calc-link" value="https://<?=$host?>"/>
+                    <input class="form-control" name="this-calc-link" value="https://<?=$host?>" readonly/>
                     <p><a class="btn-cc-copy-this-link" href="javascript:void(0);">Copy</a></p>
                 </div>
             </div>
