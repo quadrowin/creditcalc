@@ -1,0 +1,62 @@
+.block-cc-column {
+    min-width: 350px;
+}
+
+.block-cc-result .result-val {
+    white-space: nowrap;
+}
+
+.form-cc-calculator[data-source-type="credit-sum"] .field-purchase-cost {
+    display: none;
+}
+
+.form-cc-calculator[data-source-type="purchase-cost"] .field-credit-sum {
+    display: none;
+}
+
+.form-cc-calculator[data-payment-type="an"] .field-dif {
+    display: none;
+}
+
+.form-cc-calculator[data-payment-type="dif"] .field-an {
+    display: none;
+}
+
+.сс-time-interval-type button {
+    text-align: right;
+    width: 7rem;
+}
+
+.cc-payment-type .nav-item {
+    padding-left: 2rem;
+    text-align: left;
+    width: 100%;
+}
+
+.cc-payment-type .nav-item a {
+    display: inline-block;
+}
+
+.form-cc-calculator .input-group-addon {
+    width: 4rem;
+}
+
+.this-link-block .loading,
+.this-link-block .result,
+.this-link-block.forming .control,
+.this-link-block.forming .result,
+.this-link-block.formed .control,
+.this-link-block.formed .loading {
+    display: none;
+}
+
+.this-link-block.forming .loading,
+.this-link-block.formed .result {
+    display: block;
+}
+
+
+.this-link-block .loading {
+    font-style: italic;
+    height: 10rem;
+}
