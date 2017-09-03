@@ -43,6 +43,7 @@ window.cc.module_calc_index = {
             var $block = $a.closest('.nav');
             $block.find('.active').removeClass('active');
             $a.addClass('active');
+            $('.block-cc-result').find('.month-pay, .month-pay-first, .month-pay-last').text('---,--');
             this.setFormLinkValue($a, 'paymentType', 'data-payment-type');
         }, true],
 
