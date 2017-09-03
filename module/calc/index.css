@@ -60,3 +60,14 @@
     font-style: italic;
     height: 10rem;
 }
+
+
+.block-cc-result .payment-type-an,
+.block-cc-result .payment-type-dif {
+    display: none;
+}
+
+.block-cc-result[data-payment-type=an] .payment-type-an,
+.block-cc-result[data-payment-type=dif] .payment-type-dif {
+    display: table-row;
+}

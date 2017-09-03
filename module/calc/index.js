@@ -214,7 +214,12 @@ window.cc.module_calc_index = {
         var month_percent = year_percent / 12;
         var mpf = month_percent / 100;
 
-        if (this.PAYMENT_TYPE_DIF === $form.data('paymentType')) {
+        var payment_type = $form.data('paymentType');
+        var $result_block = $('.block-cc-result');
+        $result_block.data('paymentType', payment_type);
+        $result_block.attr('data-payment-type', payment_type);
+
+        if (this.PAYMENT_TYPE_DIF === payment_type) {
             // Дифференцированная схема
 
             // Ежемесячный платёж на i-м месяце вычисляется по формуле:
@@ -222,36 +227,32 @@ window.cc.module_calc_index = {
             // f = c / N - сумма в счёт погашения основного долга (одна и та же каждый месяц)
             // с - сумма кредита
             // N - срок кредита (месяцев)
+            var f = credit_sum / credit_months;
             // p_i - проценты, начисленные за пользование кредитом на i-м месяце.
             //      p_i = (c - f * (i - 1)) * p / 1200
             // p - годовая процентная ставка.
-            var f = credit_sum / credit_months;
-            var month_payment_1 = (credit_sum - f * (1 - 1)) * year_percent / 1200;
-            $('.result-month-pay').text(this.formatFloat(month_payment_1));
+            console.log(f, credit_sum, year_percent);
+            var month_payment_first = credit_sum * year_percent / 1200 + f;
+            $result_block.find('.month-pay-first').text(this.formatFloat(month_payment_first));
+            var month_payment_last = (credit_sum - f * (credit_months - 1)) * year_percent / 1200 + f;
+            $result_block.find('.month-pay-last').text(this.formatFloat(month_payment_last));
 
-            // Как вычислить плату за пользование кредитом?
-            // Для этого есть одна заветная формула, которая позволяет вычислить сумму процентов, начисленных за пользование кредитом в течение N месяцев.
-            //    s_p = p * (N + 1) / 24, где:
-            // p - годовая процентная ставка
-            // N - срок кредита (месяцев).
-
-            var above_payments = year_percent * (credit_months + 1) / 24;
-            result_total_cost += credit_sum + above_payments;
+            result_total_cost = (month_payment_first + month_payment_last) * 0.5 * credit_months;
         } else {
             // Аннуитетная схема
             // Коэффициент аннуитета = K = i*(1+i)^n/((1+i)^n-1),
             var month_factor = mpf * Math.pow(1 + mpf, credit_months) / (Math.pow(1 + mpf, credit_months) - 1);
             var month_payment = month_factor * credit_sum;
             result_total_cost += month_payment * credit_months;
-            $('.result-month-pay').text(this.formatFloat(month_payment));
+            $result_block.find('.month-pay').text(this.formatFloat(month_payment));
         }
 
         var now = new Date();
         var finish_date = new Date(now.setMonth(now.getMonth() + credit_months));
-        $('.result-finish-date').text(this.formatDate(finish_date));
+        $result_block.find('.finish-date').text(this.formatDate(finish_date));
 
-        $('.result-total-payment').text(this.formatFloat(result_total_cost));
-        $('.result-above-payment').text(this.formatFloat(result_total_cost - credit_sum));
+        $result_block.find('.total-payment').text(this.formatFloat(result_total_cost));
+        $result_block.find('.above-payment').text(this.formatFloat(result_total_cost - credit_sum));
 
         var $calc_btn = $('.btn-cc-calculate');
         if (!$calc_btn.hasClass('btn-primary')) {

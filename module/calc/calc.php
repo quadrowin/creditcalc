@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label>Срок кредита</label>
                 <div class="input-group">
-                    <input class="form-control cc-input-val" aria-label="Percent" value="12" name="credit_months" autocomplete="off">
+                    <input class="form-control cc-input-val" aria-label="Percent" value="200" name="credit_months" autocomplete="off">
                     <div class="input-group-btn сс-time-interval-type">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="active-item-title">Месяцев</span>
@@ -89,25 +89,33 @@
     </div>
 </div>
 
-<div class="row block-cc-result">
+<div class="row block-cc-result" data-payment-type="an">
     <div class="col-md-4 block-cc-column">
         <table class="table">
             <tbody>
-                <tr>
+                <tr class="payment-type-an">
                     <td>Ежемесячный платеж</td>
-                    <td class="result-val result-month-pay">35 123,23</td>
+                    <td class="result-val month-pay">35 123,23</td>
+                </tr>
+                <tr class="payment-type-dif">
+                    <td>Первый платеж</td>
+                    <td class="result-val month-pay-first">39 876,23</td>
+                </tr>
+                <tr class="payment-type-dif">
+                    <td>Последний платеж</td>
+                    <td class="result-val month-pay-last">31 234,23</td>
                 </tr>
                 <tr>
                     <td>Окончание выплат</td>
-                    <td class="result-val result-finish-date">1.1.2034</td>
+                    <td class="result-val finish-date">1.1.2034</td>
                 </tr>
                 <tr>
                     <td>Полная стоимость кредита</td>
-                    <td class="result-val result-total-payment">5 345 234,34</td>
+                    <td class="result-val total-payment">5 345 234,34</td>
                 </tr>
                 <tr>
                     <td>Переплата по кредиту</td>
-                    <td class="result-val result-above-payment">5 345 234,34</td>
+                    <td class="result-val above-payment">5 345 234,34</td>
                 </tr>
             </tbody>
         </table>
