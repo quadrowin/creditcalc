@@ -110,7 +110,6 @@ window.cc.module_calc_index = {
      * @returns {*}
      */
     formatDate: function (d) {
-        console.log(d);
         return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
     },
 
@@ -188,6 +187,7 @@ window.cc.module_calc_index = {
      * @param {jQuery} $form
      */
     recalculate: function ($form) {
+        var self = this;
         if (this.autoCalcTimeout) {
             clearTimeout(this.autoCalcTimeout);
             this.autoCalcTimeout = 0;
@@ -219,6 +219,7 @@ window.cc.module_calc_index = {
         $result_block.data('paymentType', payment_type);
         $result_block.attr('data-payment-type', payment_type);
 
+        var $month_pay;
         if (this.PAYMENT_TYPE_DIF === payment_type) {
             // Дифференцированная схема
 
@@ -231,11 +232,19 @@ window.cc.module_calc_index = {
             // p_i - проценты, начисленные за пользование кредитом на i-м месяце.
             //      p_i = (c - f * (i - 1)) * p / 1200
             // p - годовая процентная ставка.
-            console.log(f, credit_sum, year_percent);
             var month_payment_first = credit_sum * year_percent / 1200 + f;
-            $result_block.find('.month-pay-first').text(this.formatFloat(month_payment_first));
+            var $month_pay_first = $result_block.find('.month-pay-first');
+            $month_pay_first.fadeOut(200, function () {
+                $month_pay_first.text(self.formatFloat(month_payment_first));
+            });
+
             var month_payment_last = (credit_sum - f * (credit_months - 1)) * year_percent / 1200 + f;
-            $result_block.find('.month-pay-last').text(this.formatFloat(month_payment_last));
+            var $month_payment_last = $result_block.find('.month-pay-last');
+            $month_payment_last.fadeOut(200, function () {
+                $month_payment_last.text(self.formatFloat(month_payment_last));
+            });
+
+            $month_pay = $month_pay_first.add($month_payment_last);
 
             result_total_cost = (month_payment_first + month_payment_last) * 0.5 * credit_months;
         } else {
@@ -244,8 +253,14 @@ window.cc.module_calc_index = {
             var month_factor = mpf * Math.pow(1 + mpf, credit_months) / (Math.pow(1 + mpf, credit_months) - 1);
             var month_payment = month_factor * credit_sum;
             result_total_cost += month_payment * credit_months;
-            $result_block.find('.month-pay').text(this.formatFloat(month_payment));
+            $month_pay = $result_block.find('.month-pay');
+            $month_pay.fadeOut(200, function () {
+                $month_pay.text(self.formatFloat(month_payment));
+            });
         }
+        // $month_pay.stop(true, false);
+
+        $month_pay.fadeIn(200);
 
         var now = new Date();
         var finish_date = new Date(now.setMonth(now.getMonth() + credit_months));
